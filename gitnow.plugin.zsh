@@ -1,4 +1,4 @@
-# ABOUTME: Provides GitNow-style stage, commit, pull, and push commands for zsh.
+# ABOUTME: Provides GitNow-style Git workflow commands for zsh.
 # ABOUTME: Loads directly from .zshrc or as an Oh My Zsh plugin.
 
 function stage {
@@ -58,3 +58,8 @@ function pull {
 function push {
   _gitnow_sync push "$@"
 }
+
+for _gitnow_file in worktree branches tags hosting; do
+  source "${${(%):-%x}:A:h}/commands/$_gitnow_file.zsh"
+done
+unset _gitnow_file
