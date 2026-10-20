@@ -1,0 +1,16 @@
+#!/bin/sh
+# ABOUTME: Executes GitNow commands through zsh from any calling shell.
+# ABOUTME: Dispatches by launcher name while preserving arguments and exit status.
+
+exec zsh -f -c '
+  emulate -LR zsh
+  entry=$1
+  shift
+  operation=${entry:t}
+  source "${entry:A:h:h}/gitnow.plugin.zsh" || exit $?
+  if [[ $operation == _gitnow_* ]] || (( ! $+functions[$operation] )); then
+    print -u2 -- "gitnow: unknown launcher: $operation"
+    exit 2
+  fi
+  "$operation" "$@"
+' gitnow "$0" "$@"
