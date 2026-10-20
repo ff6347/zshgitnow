@@ -12,4 +12,5 @@
 - [decision] bin/ exposes the command names as executables through one zsh -f dispatcher and symlinks; Bash and agent commands need only PATH setup, not a separate implementation.
 - [technique] Run bash tests/bash-smoke.sh to verify non-interactive Bash launching, symlinks, argument quoting, and exit status preservation.
 - [risk] Pi starts a fresh shell per command; export PATH before starting Pi or configure shellCommandPrefix. A standalone !export does not persist.
+- [decision] On this machine, all command launchers are symlinked into ~/.local/bin from /Users/agent/Documents/zshgitnow/bin; no PATH or startup-file changes were needed. Keep the checkout in place.
 - [risk] Do not modify personal shell startup files without explicit approval.

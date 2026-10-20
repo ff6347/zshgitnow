@@ -31,3 +31,10 @@
 - [technique] Resolve the original invocation name before resolving the launcher path, so chained external symlinks retain their command identity while locating the checkout.
 - [verification] The Bash smoke check first failed because the launcher was absent, then passed using non-interactive Bash, literal shell metacharacters, a checkout path with spaces, local sync operations, and exact Git failure status/output comparisons.
 - [decision] Document inherited PATH and Pi's shellCommandPrefix instead of sourcing interactive configuration in agent commands.
+
+## Local installation
+
+- [decision] Fabian approved installing launcher symlinks in ~/.local/bin, which is already present on the current agent's inherited PATH.
+- [verification] Checked all 23 destination names for collisions before installation; none existed and no files were overwritten.
+- [verification] All installed commands resolve through ~/.local/bin from bash --noprofile --norc without altering PATH. gitnow --version and state also ran directly through the agent shell tool.
+- [risk] Installed links target this checkout's bin/ directory; keep the checkout in place. Shell startup files and Pi settings were not modified.
