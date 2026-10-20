@@ -74,8 +74,9 @@ The plugin does not change Git configuration, install keybindings, or load
 not a byte-for-byte port of Fish output or configuration. In particular, `move`
 also carries untracked files and preserves staging when reapplying its stash.
 
-Bash sessions do not load this zsh plugin. Agents using Bash can continue to use
-Git directly, or explicitly run zsh and source the plugin.
+Bash and other shells can use the executable launchers in `bin/` without
+sourcing the plugin. See [Bash and agent setup](docs/bash.md) for PATH setup and
+Pi's `!` commands. The launchers reuse the same zsh implementation.
 
 ## Smoke check
 
@@ -87,6 +88,7 @@ for file in gitnow.plugin.zsh commands/*.zsh tests/*.zsh; do
 done
 zsh tests/smoke.zsh
 zsh tests/commands-smoke.zsh
+bash tests/bash-smoke.sh
 ```
 
 The smoke checks use temporary local repositories and a local bare remote.

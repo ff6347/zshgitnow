@@ -9,4 +9,7 @@
 - [lesson] Brace zsh variables before literal refspec colons: ${target}:refs avoids interpreting :r as a parameter modifier.
 - [decision] move owns its stash, includes untracked files, restores the index, and keeps saved changes recoverable on checkout or application failure.
 - [lesson] Nonempty git status does not guarantee stash push created a stash (dirty submodules); compare refs/stash before and after before restoring anything.
+- [decision] bin/ exposes the command names as executables through one zsh -f dispatcher and symlinks; Bash and agent commands need only PATH setup, not a separate implementation.
+- [technique] Run bash tests/bash-smoke.sh to verify non-interactive Bash launching, symlinks, argument quoting, and exit status preservation.
+- [risk] Pi starts a fresh shell per command; export PATH before starting Pi or configure shellCommandPrefix. A standalone !export does not persist.
 - [risk] Do not modify personal shell startup files without explicit approval.

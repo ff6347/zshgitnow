@@ -23,3 +23,11 @@
 - [verification] The command smoke check failed on missing gitnow before implementation, then passed with branch, stash, merge conflict, semantic-tag, and local hosting-clone checks.
 - [technique] SSH-form clone URLs are exercised using Git's insteadOf rewriting to a local bare remote; live hosting authentication is not tested.
 - [lesson] Dirty submodules can make status nonempty while stash push creates no stash. Compare refs/stash before and after saving so move never applies or drops a user's pre-existing stash. A real submodule smoke reproduction failed before this ownership check.
+
+## Executable launchers
+
+- [decision] Fabian approved executable launchers and installation documentation without personal shell configuration changes.
+- [decision] bin/gitnow execs zsh -f and dispatches to the existing plugin by invocation name; relative sibling symlinks expose the other command names.
+- [technique] Resolve the original invocation name before resolving the launcher path, so chained external symlinks retain their command identity while locating the checkout.
+- [verification] The Bash smoke check first failed because the launcher was absent, then passed using non-interactive Bash, literal shell metacharacters, a checkout path with spaces, local sync operations, and exact Git failure status/output comparisons.
+- [decision] Document inherited PATH and Pi's shellCommandPrefix instead of sourcing interactive configuration in agent commands.
