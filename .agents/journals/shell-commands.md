@@ -12,3 +12,14 @@
 - [decision] Shell startup files remain untouched; installation instructions cover plain zsh and Oh My Zsh.
 - [verification] Smoke checks passed for real Git operations, failure propagation, and detached HEAD diagnostics; zsh syntax checks and ShellCheck's Bash-mode analysis of the plugin passed.
 - [verification] Loading the plugin twice with pre-existing command aliases parses successfully; aliases remain under user control.
+
+## Complete command set
+
+- [decision] Fabian approved all remaining commands with direct main commits and smoke checks; configuration and keybindings stay out of scope.
+- [decision] Group helper functions under commands/ by worktree operations, branches, tags, and hosting to keep individual source files small.
+- [decision] move includes untracked files and restores staging; stash application conflicts retain the stash and failed checkouts restore work on the original branch.
+- [lesson] An unbraced variable followed by :refs triggers zsh's :r parameter modifier; brace variables in fetch refspecs.
+- [lesson] Generate the smoke editor using print -rl so the shebang and command occupy separate lines.
+- [verification] The command smoke check failed on missing gitnow before implementation, then passed with branch, stash, merge conflict, semantic-tag, and local hosting-clone checks.
+- [technique] SSH-form clone URLs are exercised using Git's insteadOf rewriting to a local bare remote; live hosting authentication is not tested.
+- [lesson] Dirty submodules can make status nonempty while stash push creates no stash. Compare refs/stash before and after saving so move never applies or drops a user's pre-existing stash. A real submodule smoke reproduction failed before this ownership check.

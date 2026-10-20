@@ -1,7 +1,7 @@
 # zsh gitnow
 
-A native zsh implementation of the `stage`, `commit`, `pull`, and `push`
-commands inspired by [GitNow](https://github.com/joseluisq/gitnow).
+Native zsh Git workflow commands inspired by
+[GitNow](https://github.com/joseluisq/gitnow).
 Requires Git and zsh; Fish and Oh My Zsh are not required.
 
 ## Install without Oh My Zsh
@@ -19,7 +19,8 @@ source "$HOME/.local/share/zshgitnow/gitnow.plugin.zsh"
 ```
 
 Open a fresh zsh shell. If you already have a checkout, you can source
-`gitnow.plugin.zsh` from that directory instead.
+`gitnow.plugin.zsh` from that directory instead. Keep the `commands/` directory
+beside the plugin file; the plugin loads its helpers from there.
 
 ## Install with Oh My Zsh
 
@@ -53,13 +54,25 @@ pull                       # Rebase onto the remote branch, autostashing changes
 push                       # Push and set upstream tracking.
 ```
 
+Available commands:
+
+| Group | Commands |
+| --- | --- |
+| Inspection | `gitnow`, `state`, `show`, `untracked`, `logs` |
+| Changes | `stage`, `unstage`, `commit`, `commit-all`, `upstream`, `assume` |
+| Synchronization | `pull`, `push`, `move`, `merge` |
+| Branches | `branch`, `feature`, `hotfix`, `bugfix`, `release` |
+| Tags and cloning | `tag`, `github`, `bitbucket` |
+
 See the [command reference](docs/commands.md) for arguments and remote selection.
 
-The plugin defines shell functions named `stage`, `commit`, `pull`, and `push`.
+The plugin defines shell functions with the command names above.
 Check for conflicts with `type stage commit pull push`; existing aliases can take
 precedence, and should be removed explicitly if you want these functions instead.
 The plugin does not change Git configuration, install keybindings, or load
-`~/.gitnow`. Other upstream GitNow commands are not implemented.
+`~/.gitnow`. This is a native implementation of the documented command set,
+not a byte-for-byte port of Fish output or configuration. In particular, `move`
+also carries untracked files and preserves staging when reapplying its stash.
 
 Bash sessions do not load this zsh plugin. Agents using Bash can continue to use
 Git directly, or explicitly run zsh and source the plugin.
@@ -69,10 +82,13 @@ Git directly, or explicitly run zsh and source the plugin.
 From this checkout:
 
 ```zsh
-zsh -n gitnow.plugin.zsh
-zsh -n tests/smoke.zsh
+for file in gitnow.plugin.zsh commands/*.zsh tests/*.zsh; do
+  zsh -n "$file" || break
+done
 zsh tests/smoke.zsh
+zsh tests/commands-smoke.zsh
 ```
 
-The smoke check uses temporary local repositories and a local bare remote;
-no network access or personal repository changes are needed.
+The smoke checks use temporary local repositories and a local bare remote.
+Hosting clone checks use Git URL rewriting to that remote, rather than live SSH
+connections. No network access or personal repository changes are needed.
